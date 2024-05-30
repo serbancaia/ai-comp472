@@ -28,6 +28,7 @@ for i in range(len(images)):
 
         for j in range(i + 1, len(images)):
             dupe_file = images[j]
+            dupe_folder_path = os.path.join(folder_path, dupe_file)
             if os.path.exists(dupe_folder_path):
                 dupeimg = cv2.imread(dupe_folder_path, 0)
                 dupeimg = dupeimg.ravel()
