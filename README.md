@@ -26,14 +26,14 @@ Step 0) Open the Python environment with the above packages installed through th
 		Step 1) Execute >python dupecheck.py  
 		Step 2) Enter the absolute folder path to the dataset that you would like to check for duplicates (ex: "C:\Users\Tristan\Desktop\Concordia\COMP 472\Project-Part1\Training\Happy")  
 		Step 3) Wait for the script to run. Any duplicate images will be identified (and printed) and deleted. The script may take up to ~45 seconds for a dataset consisting of 500 images  
-  <br />
+<br />
 	-resizing.py: This script grayscales and resizes all images in a directory to 48x48px, necessary to standardize our datasets  
 
 		Step 1) Execute >python resizing.py  
 		Step 2) Enter the absolute folder path to the dataset that you would like to resize to 48x48px and grayscale (ex: "C:\Users\Tristan\Desktop\Concordia\COMP 472\Project-Part1\Training\Happy")  
 		Step 3) The script will grayscale and resize every image in the directory automatically  
 		**NOTE: THIS SCRIPT SHOULD BE RUN ON A DATASET BEFORE RUNNING ANY OTHER PYTHON SCRIPT IN ORDER TO STANDARDIZE THE DATASETS!  
-  <br />
+<br />
 	b) <br />      
 	-aggregatehistogram.py: This script is used to plot/display the aggregated pixel intensity distribution for an entire dataset class  
 
@@ -43,7 +43,7 @@ Step 0) Open the Python environment with the above packages installed through th
 		Step 4) The aggregated pixel intensity distribution histogram for the entire dataset class is displayed  
 			The x-axis of the histogram denotes the pixel intensity from 0-255 (0 being black and 255 being white)  
 			The y-axis of the histogram denotes the number of pixels that have that pixel intensity value  
-   <br />
+<br />
 	-imagebar.py: This script is used to plot/display the bar graph showing the number of images in each dataset class. Takes 4 dataset absolute folder paths as input  
 
 		Step 1) Execute >python imagebar.py  
@@ -54,7 +54,7 @@ Step 0) Open the Python environment with the above packages installed through th
 		Step 6) The bar graph showing the number of images in each dataset is displayed  
 			The x-axis of the bar graph denotes the dataset name  
 			The y-axis of the bar graph denotes the number of images  
-   <br />
+<br />
 	-imagehistogram.py: This script randomly selects 15 images in a provided directory and plots/displays those images' pixel intensity histograms  
 
 		Step 1) Execute >python imagehistogram.py  
@@ -69,14 +69,17 @@ Step 0) Open the Python environment with the above packages installed through th
 	their licensing type is listed. This document also showcases the custom images our team created for each class for our dataset along
 	with the necessary modifications for standardization with the rest of our dataset. Lastly, this file contains a sample set of 25
 	representative images for each class in our dataset.  
+ <br />
 	A direct link to our dataset's .zip file (uploaded to our GitHub repository) is provided at the top of this file.  
+ <br />
 	The purpose of this file is to display information about our dataset and the online datasets we used as well as showcase some of the
 	images that could be found in our dataset, as we are unable to upload the entire dataset to Moodle due to its large size.  
 
 ## ProjectReport-Part1.pdf:  
 <br />
-	This file contains the complete report of our work for Part 1 of our project. The report includes a title page, information about the 
-	creation of our dataset, the explanation of our data cleaning techniques and challenges, the explanation of the labeling methods and 
+	This file contains the complete report of our work for Part 1 of our project.
+ <br />
+ 	The report includes a title page, information about the creation of our dataset, the explanation of our data cleaning techniques and challenges, the explanation of the labeling methods and 
 	challenges, and the visualizations of our dataset. These visualizations include a bar graph to display the number of images our dataset 
 	contains in each expression's training data class, one aggregrated pixel intensity distribution histogram for each expression's training 
 	data class, and pixel intensity histograms for 15 randomly chosen images in each expression's training data class. Lastly, this report 
