@@ -63,20 +63,20 @@ Step 0) Open the Python environment with the above packages installed through th
 			The y-axis of the histogram denotes the number of pixels that have that pixel intensity value  
 
 Dataset.pdf: <br />
-	This file contains the provenance of the datasets and images used for our project's dataset. Referencing of the online dataset and  
-	their licensing type is listed. This document also showcases the custom images our team created for each class for our dataset along  
-	with the necessary modifications for standardization with the rest of our dataset. Lastly, this file contains a sample set of 25  
+	This file contains the provenance of the datasets and images used for our project's dataset. Referencing of the online dataset and
+	their licensing type is listed. This document also showcases the custom images our team created for each class for our dataset along
+	with the necessary modifications for standardization with the rest of our dataset. Lastly, this file contains a sample set of 25
 	representative images for each class in our dataset.  
 	A direct link to our dataset's .zip file (uploaded to our GitHub repository) is provided at the top of this file.  
-	The purpose of this file is to display information about our dataset and the online datasets we used as well as showcase some of the  
+	The purpose of this file is to display information about our dataset and the online datasets we used as well as showcase some of the
 	images that could be found in our dataset, as we are unable to upload the entire dataset to Moodle due to its large size.  
 <br />
 ProjectReport-Part1.pdf:  
-	This file contains the complete report of our work for Part 1 of our project. The report includes a title page, information about the   
-	creation of our dataset, the explanation of our data cleaning techniques and challenges, the explanation of the labeling methods and   
-	challenges, and the visualizations of our dataset. These visualizations include a bar graph to display the number of images our dataset  
-	contains in each expression's training data class, one aggregrated pixel intensity distribution histogram for each expression's training   
-	data class, and pixel intensity histograms for 15 randomly chosen images in each expression's training data class. Lastly, this report   
+	This file contains the complete report of our work for Part 1 of our project. The report includes a title page, information about the 
+	creation of our dataset, the explanation of our data cleaning techniques and challenges, the explanation of the labeling methods and 
+	challenges, and the visualizations of our dataset. These visualizations include a bar graph to display the number of images our dataset 
+	contains in each expression's training data class, one aggregrated pixel intensity distribution histogram for each expression's training 
+	data class, and pixel intensity histograms for 15 randomly chosen images in each expression's training data class. Lastly, this report 
 	contains a reference section for all the material used/referenced throughout this deliverable.  
 <br />
 Expectation of Originality files:  
