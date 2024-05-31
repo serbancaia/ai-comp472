@@ -19,6 +19,7 @@ Direct link: https://github.com/serbancaia/ai-comp472/blob/ce8d08fd58db7d4b2cab8
 ## Our '.py' Python script files:  
 ### ---STEPS FOR EXECUTING OUR CODE FOR (a) DATA CLEANING AND (b) DATA VISUALIZATION---  
 Step 0) Open the Python environment with the above packages installed through the command prompt and navigate to the directory containing the python scripts.  
+<br />
 	a)  
 	-dupecheck.py: This script is used to check for duplicate images within a directory by comparing every pixel's intensity and deletes duplicates 
  
@@ -60,9 +61,10 @@ Step 0) Open the Python environment with the above packages installed through th
 		Step 2) Enter the absolute folder path to the dataset that you would like to generate the 15 randomly selected pixel intensity histograms for (ex: "C:\Users\Tristan\Desktop\Concordia\COMP 472\Project-Part1\Training\Happy")  
 		Step 3) 15 pixel intensity histograms corresponding to the 15 randomly selected images will be displayed one at a time (close the histogram for the next one to be displayed)  
 			The x-axis of the histogram denotes the the pixel intensity from 0-255 (0 being black and 255 being white)  
-			The y-axis of the histogram denotes the number of pixels that have that pixel intensity value  
-   
+			The y-axis of the histogram denotes the number of pixels that have that pixel intensity value
+
 ## Dataset.pdf:  
+<br />
 	This file contains the provenance of the datasets and images used for our project's dataset. Referencing of the online dataset and
 	their licensing type is listed. This document also showcases the custom images our team created for each class for our dataset along
 	with the necessary modifications for standardization with the rest of our dataset. Lastly, this file contains a sample set of 25
@@ -70,21 +72,25 @@ Step 0) Open the Python environment with the above packages installed through th
 	A direct link to our dataset's .zip file (uploaded to our GitHub repository) is provided at the top of this file.  
 	The purpose of this file is to display information about our dataset and the online datasets we used as well as showcase some of the
 	images that could be found in our dataset, as we are unable to upload the entire dataset to Moodle due to its large size.  
-<br />
+
 ## ProjectReport-Part1.pdf:  
+<br />
 	This file contains the complete report of our work for Part 1 of our project. The report includes a title page, information about the 
 	creation of our dataset, the explanation of our data cleaning techniques and challenges, the explanation of the labeling methods and 
 	challenges, and the visualizations of our dataset. These visualizations include a bar graph to display the number of images our dataset 
 	contains in each expression's training data class, one aggregrated pixel intensity distribution histogram for each expression's training 
 	data class, and pixel intensity histograms for 15 randomly chosen images in each expression's training data class. Lastly, this report 
 	contains a reference section for all the material used/referenced throughout this deliverable.  
-<br />
+
 ## Expectation of Originality files:  
-	Expectations-of-Originality-May30-2024-AlinCaia.pdf:  
-		This is the Expectation of Originality form signed by Alin Caia  
-	Expectations-of-Originality-MelissaAnanian40112159.pdf:  
-		This is the Expectation of Originality form signed by Melissa Ananian  
-	Expectations-of-Originality-TristanManniMirolla40112168.pdf:  
-		This is the Expectation of Originality form signed by Tristan Manni-Mirolla  
-  <br />
+<br />
+	Expectations-of-Originality-May30-2024-AlinCaia.pdf: <br />
+		This is the Expectation of Originality form signed by Alin Caia <br />
+<br />
+	Expectations-of-Originality-MelissaAnanian40112159.pdf: <br />
+		This is the Expectation of Originality form signed by Melissa Ananian <br />
+<br />
+	Expectations-of-Originality-TristanManniMirolla40112168.pdf: <br />
+		This is the Expectation of Originality form signed by Tristan Manni-Mirolla <br />
+<br />
 	These forms are provided to attest to the originality of our work.  
