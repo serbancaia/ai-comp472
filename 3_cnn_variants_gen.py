@@ -4,9 +4,9 @@ Created on Tue Jun 14 18:25:51 2024
 
 @author: SerbanCaia
 """
-import MainCNNModel as main_cnn
-import Variant1Model as variant1_cnn
-import Variant2Model as variant2_cnn
+import MainCNNModel_callable as main_cnn
+import Variant1Model_callable as variant1_cnn
+import Variant2Model_callable as variant2_cnn
 
 # Choose which model to save
 while True:

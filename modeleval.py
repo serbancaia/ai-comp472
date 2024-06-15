@@ -16,7 +16,7 @@ from torch.utils.data import Dataset
 
 # Load the saved model
 model = ConvNeuralNet() # Create instance of ConvNeuralNet
-model.load_state_dict(torch.load('main_best_model.pth'))  # Load the best-performing model --> main_best_model.pth is the final model we saved from our MainCNNModel.py architecture that we conducted evaluations on
+model.load_state_dict(torch.load('main_best_model.pth'))  # Load the best-performing model --> main_best_model.pth is the final model we saved from our MainCNNModel_callable.py architecture that we conducted evaluations on
 model.eval()
 
 transform = transforms.Compose([

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Jun  9 21:29:35 2024
+Created on Thu Jun 13 15:59:10 2024
 
-@author: TristanM2, Meliimoon, serbancaia
+@author: Meliimoon
 """
 
 import torch
@@ -10,35 +10,8 @@ import torch.nn as nn
 from torchvision import datasets
 import torchvision.transforms as transforms
 import os 
-from torch.utils.data import DataLoader 
+from torch.utils.data import DataLoader
 
-num_epochs = 20
-num_classes = 4
-learning_rate = 0.0005
-
-transform = transforms.Compose([
-    transforms.Grayscale(num_output_channels=1),
-    transforms.Resize((48, 48)),
-    transforms.ToTensor(), 
-    transforms.Normalize((0.5,), (0.5,))
-])
-
-#Define directories
-dataset_dir = './GeneratedSplitDataset'
-
-train_dir = os.path.join(dataset_dir, 'train')
-validation_dir = os.path.join(dataset_dir, 'validation')
-test_dir = os.path.join(dataset_dir, 'test')
-
-#Load the datasets
-train_dataset = datasets.ImageFolder(root=train_dir, transform=transform)
-validation_dataset = datasets.ImageFolder(root=validation_dir, transform=transform)
-test_dataset = datasets.ImageFolder(root=test_dir, transform=transform)
-
-#Create the DataLoaders
-train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True, num_workers=0)
-validation_loader = DataLoader(validation_dataset, batch_size=32, shuffle=False, num_workers=0)
-test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False, num_workers=0)
 
 class ConvNeuralNet(nn.Module):
     def __init__(self):
@@ -46,24 +19,8 @@ class ConvNeuralNet(nn.Module):
         #CNN architecture 
         self.conv_layer = nn.Sequential(
             
-            nn.Conv2d(in_channels=1, out_channels=32, kernel_size=3),
-            nn.BatchNorm2d(32),
-            nn.LeakyReLU(True),
-            nn.Conv2d(32, 32, 3),
-            nn.BatchNorm2d(32),
-            nn.LeakyReLU(True),
-            nn.MaxPool2d(kernel_size=2, stride=2),
-            nn.Dropout(0.25),
-            
-            nn.Conv2d(32, 64, 3),
-            nn.BatchNorm2d(64),
-            nn.LeakyReLU(True),
-            
-            nn.Conv2d(64, 64, 3),
-            nn.BatchNorm2d(64),
-            nn.LeakyReLU(True),
-            nn.Conv2d(64, 128, 3),
-            nn.BatchNorm2d(128),
+            nn.Conv2d(in_channels=1, out_channels=16, kernel_size=5),
+            nn.BatchNorm2d(16),
             nn.LeakyReLU(True),
             nn.MaxPool2d(kernel_size=2, stride=2),
             nn.Dropout(0.25),
@@ -72,13 +29,11 @@ class ConvNeuralNet(nn.Module):
         
         self.fc_layer = nn.Sequential(
             
-            nn.Linear(in_features=8*8*128, out_features=1024),
             nn.ReLU(True),
             nn.Dropout(0.5),
-            nn.Linear(1024,4),
+            nn.Linear(22*22*16,4),
             
         )
-        
 
     def forward(self, x):
         #Feeding image through convolutional and pooling layers
@@ -87,25 +42,54 @@ class ConvNeuralNet(nn.Module):
         #print('x_shape:',x.shape)
         
         #Flatten
-        x = x.view(-1, 8*8*128) #Flatten the tensor to a 1-D vector
+        x = x.view(-1, 22*22*16) #Flatten the tensor to a 1-D vector
         
         #Fully connected layer
         x = self.fc_layer(x)
 
         return x
 
-model = ConvNeuralNet() #Creating an instance of the CNN
 
-criterion = nn.CrossEntropyLoss() #Includes SoftMax, so we do not need a SoftMax activation function at the end of the last fc layer
-optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+def main():
+    num_epochs = 20
+    num_classes = 4
+    learning_rate = 0.0005
 
-total_steps = len(train_loader)
+    transform = transforms.Compose([
+        transforms.Grayscale(num_output_channels=1),
+        transforms.Resize((48, 48)),
+        transforms.ToTensor(),
+        transforms.Normalize((0.5,), (0.5,))
+    ])
 
-best_val_loss = float('inf')
-patience = 6  # Number of epochs to wait before early stopping
-trigger_times = 0
+    # Define directories
+    dataset_dir = './GeneratedSplitDataset'
 
-if __name__ == "__main__":
+    train_dir = os.path.join(dataset_dir, 'train')
+    validation_dir = os.path.join(dataset_dir, 'validation')
+    test_dir = os.path.join(dataset_dir, 'test')
+
+    # Load the datasets
+    train_dataset = datasets.ImageFolder(root=train_dir, transform=transform)
+    validation_dataset = datasets.ImageFolder(root=validation_dir, transform=transform)
+    test_dataset = datasets.ImageFolder(root=test_dir, transform=transform)
+
+    # Create the DataLoaders
+    train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True, num_workers=0)
+    validation_loader = DataLoader(validation_dataset, batch_size=32, shuffle=False, num_workers=0)
+    test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False, num_workers=0)
+
+    model = ConvNeuralNet()  # Creating an instance of the CNN
+
+    criterion = nn.CrossEntropyLoss()  # Includes SoftMax, so we do not need a SoftMax activation function at the end of the last fc layer
+    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+
+    total_steps = len(train_loader)
+
+    best_val_loss = float('inf')
+    patience = 6  # Number of epochs to wait before early stopping
+    trigger_times = 0
+
     for epoch in range(num_epochs): 
         model.train()
         for i, (images, labels) in enumerate(train_loader):
@@ -150,7 +134,7 @@ if __name__ == "__main__":
             trigger_times = 0
             
             # Saving best-performing model (based on validation set)
-            path = './main_best_model.pth'
+            path = './variant1.pth'
             if os.path.isfile(path): # File exists, will compare best model with current model and will save the better model
                 # Define validation evaluation for the saved model
                 def current_saved_model_eval(model, dataloader, criterion):
@@ -170,11 +154,11 @@ if __name__ == "__main__":
                 saved_model_loss = current_saved_model_eval(saved_model, validation_loader, criterion) # Evaluate saved model
                 
                 if average_val_loss < saved_model_loss:  # Compare saved model with current model, save current model as new best model, do nothing otherwise          
-                    torch.save(model.state_dict(), 'main_best_model.pth')
+                    torch.save(model.state_dict(), 'variant1.pth')
                     print("New best model saved.")
                     
             else: # File does not exist, first ever model will be saved
-                torch.save(model.state_dict(), 'main_best_model.pth')
+                torch.save(model.state_dict(), 'variant1.pth')
                 print("First best model saved.")
                 
         else:
@@ -196,3 +180,6 @@ if __name__ == "__main__":
             
     print('Test Accuracy of the model: {} %'.format((correct / total) * 100))
 
+
+if __name__ == "__main__":
+    main()

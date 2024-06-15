@@ -2,7 +2,7 @@
 """
 Created on Sun Jun  9 21:29:35 2024
 
-@author: TristanM2, Meliimoon, serbancaia
+@author: TristanM2, Meliimoon, SerbanCaia
 """
 
 import torch
@@ -12,33 +12,6 @@ import torchvision.transforms as transforms
 import os 
 from torch.utils.data import DataLoader 
 
-num_epochs = 20
-num_classes = 4
-learning_rate = 0.0005
-
-transform = transforms.Compose([
-    transforms.Grayscale(num_output_channels=1),
-    transforms.Resize((48, 48)),
-    transforms.ToTensor(), 
-    transforms.Normalize((0.5,), (0.5,))
-])
-
-#Define directories
-dataset_dir = './GeneratedSplitDataset'
-
-train_dir = os.path.join(dataset_dir, 'train')
-validation_dir = os.path.join(dataset_dir, 'validation')
-test_dir = os.path.join(dataset_dir, 'test')
-
-#Load the datasets
-train_dataset = datasets.ImageFolder(root=train_dir, transform=transform)
-validation_dataset = datasets.ImageFolder(root=validation_dir, transform=transform)
-test_dataset = datasets.ImageFolder(root=test_dir, transform=transform)
-
-#Create the DataLoaders
-train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True, num_workers=0)
-validation_loader = DataLoader(validation_dataset, batch_size=32, shuffle=False, num_workers=0)
-test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False, num_workers=0)
 
 class ConvNeuralNet(nn.Module):
     def __init__(self):
@@ -78,7 +51,6 @@ class ConvNeuralNet(nn.Module):
             nn.Linear(1024,4),
             
         )
-        
 
     def forward(self, x):
         #Feeding image through convolutional and pooling layers
@@ -94,18 +66,47 @@ class ConvNeuralNet(nn.Module):
 
         return x
 
-model = ConvNeuralNet() #Creating an instance of the CNN
 
-criterion = nn.CrossEntropyLoss() #Includes SoftMax, so we do not need a SoftMax activation function at the end of the last fc layer
-optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+def main():
+    num_epochs = 20
+    num_classes = 4
+    learning_rate = 0.0005
 
-total_steps = len(train_loader)
+    transform = transforms.Compose([
+        transforms.Grayscale(num_output_channels=1),
+        transforms.Resize((48, 48)),
+        transforms.ToTensor(),
+        transforms.Normalize((0.5,), (0.5,))
+    ])
 
-best_val_loss = float('inf')
-patience = 6  # Number of epochs to wait before early stopping
-trigger_times = 0
+    # Define directories
+    dataset_dir = './GeneratedSplitDataset'
 
-if __name__ == "__main__":
+    train_dir = os.path.join(dataset_dir, 'train')
+    validation_dir = os.path.join(dataset_dir, 'validation')
+    test_dir = os.path.join(dataset_dir, 'test')
+
+    # Load the datasets
+    train_dataset = datasets.ImageFolder(root=train_dir, transform=transform)
+    validation_dataset = datasets.ImageFolder(root=validation_dir, transform=transform)
+    test_dataset = datasets.ImageFolder(root=test_dir, transform=transform)
+
+    # Create the DataLoaders
+    train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True, num_workers=0)
+    validation_loader = DataLoader(validation_dataset, batch_size=32, shuffle=False, num_workers=0)
+    test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False, num_workers=0)
+
+    model = ConvNeuralNet()  # Creating an instance of the CNN
+
+    criterion = nn.CrossEntropyLoss()  # Includes SoftMax, so we do not need a SoftMax activation function at the end of the last fc layer
+    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+
+    total_steps = len(train_loader)
+
+    best_val_loss = float('inf')
+    patience = 6  # Number of epochs to wait before early stopping
+    trigger_times = 0
+
     for epoch in range(num_epochs): 
         model.train()
         for i, (images, labels) in enumerate(train_loader):
@@ -196,3 +197,6 @@ if __name__ == "__main__":
             
     print('Test Accuracy of the model: {} %'.format((correct / total) * 100))
 
+
+if __name__ == "__main__":
+    main()

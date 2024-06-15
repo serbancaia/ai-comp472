@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Jun 13 15:59:10 2024
+Created on Sun Jun  9 21:29:35 2024
 
-@author: Meliimoon
+@author: TristanM2, Meliimoon, serbancaia
 """
 
 import torch
@@ -40,41 +40,38 @@ train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True, num_worker
 validation_loader = DataLoader(validation_dataset, batch_size=32, shuffle=False, num_workers=0)
 test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False, num_workers=0)
 
-print("DataLoaders created from split dataset.") #DEBUG
-
 class ConvNeuralNet(nn.Module):
     def __init__(self):
         super(ConvNeuralNet, self).__init__()
-        #CNN architecture 
+        # CNN architecture
         self.conv_layer = nn.Sequential(
-            
+
             nn.Conv2d(in_channels=1, out_channels=16, kernel_size=5),
             nn.BatchNorm2d(16),
             nn.LeakyReLU(True),
             nn.MaxPool2d(kernel_size=2, stride=2),
             nn.Dropout(0.25),
-            
+
         )
-        
+
         self.fc_layer = nn.Sequential(
-            
+
             nn.ReLU(True),
             nn.Dropout(0.5),
-            nn.Linear(22*22*16,4),
-            
+            nn.Linear(22 * 22 * 16, 4),
+
         )
-        
 
     def forward(self, x):
-        #Feeding image through convolutional and pooling layers
+        # Feeding image through convolutional and pooling layers
         x = self.conv_layer(x)
-        
-        #print('x_shape:',x.shape)
-        
-        #Flatten
-        x = x.view(-1, 22*22*16) #Flatten the tensor to a 1-D vector
-        
-        #Fully connected layer
+
+        # print('x_shape:',x.shape)
+
+        # Flatten
+        x = x.view(-1, 22 * 22 * 16)  # Flatten the tensor to a 1-D vector
+
+        # Fully connected layer
         x = self.fc_layer(x)
 
         return x
@@ -135,7 +132,7 @@ if __name__ == "__main__":
             trigger_times = 0
             
             # Saving best-performing model (based on validation set)
-            path = './best_model_variation1.pth'
+            path = './variant1.pth'
             if os.path.isfile(path): # File exists, will compare best model with current model and will save the better model
                 # Define validation evaluation for the saved model
                 def current_saved_model_eval(model, dataloader, criterion):
@@ -155,11 +152,11 @@ if __name__ == "__main__":
                 saved_model_loss = current_saved_model_eval(saved_model, validation_loader, criterion) # Evaluate saved model
                 
                 if average_val_loss < saved_model_loss:  # Compare saved model with current model, save current model as new best model, do nothing otherwise          
-                    torch.save(model.state_dict(), 'best_model_variation1.pth') 
+                    torch.save(model.state_dict(), 'variant1.pth')
                     print("New best model saved.")
                     
             else: # File does not exist, first ever model will be saved
-                torch.save(model.state_dict(), 'best_model_variation1.pth') 
+                torch.save(model.state_dict(), 'variant1.pth')
                 print("First best model saved.")
                 
         else:
@@ -180,3 +177,4 @@ if __name__ == "__main__":
             correct += (predicted == labels).sum().item()
             
     print('Test Accuracy of the model: {} %'.format((correct / total) * 100))
+
