@@ -1,0 +1,37 @@
+Training & validation batch size: 64
+Testing batch size: 128
+Stride length: 1
+Kernel size: 3
+Convolutional dropout value: 0.25
+FC layer dropout value: 0.5
+Max pooling iterates after every 2 conv layer
+Conv output channel value iterates after every 2 conv layer
+FC dropout iterates after every 1 FC layer
+Conv layer number: 5
+FC layer number: 2
+Initial conv layer output channels: 32
+Learning rate: 0.0005
+Number of epochs: 10
+Try #1
+
+Epoch [1/10], Step [10/25], Loss: 1.4214, Accuracy: 34.38%
+Epoch [1/10], Step [20/25], Loss: 1.3646, Accuracy: 45.31%
+Epoch [2/10], Step [10/25], Loss: 1.3181, Accuracy: 42.19%
+Epoch [2/10], Step [20/25], Loss: 1.3235, Accuracy: 48.44%
+Epoch [3/10], Step [10/25], Loss: 1.0481, Accuracy: 62.50%
+Epoch [3/10], Step [20/25], Loss: 1.0714, Accuracy: 56.25%
+Epoch [4/10], Step [10/25], Loss: 1.1056, Accuracy: 53.12%
+Epoch [4/10], Step [20/25], Loss: 0.9747, Accuracy: 57.81%
+Epoch [5/10], Step [10/25], Loss: 0.9966, Accuracy: 64.06%
+Epoch [5/10], Step [20/25], Loss: 0.9607, Accuracy: 56.25%
+Epoch [6/10], Step [10/25], Loss: 0.8475, Accuracy: 65.62%
+Epoch [6/10], Step [20/25], Loss: 0.9041, Accuracy: 59.38%
+Epoch [7/10], Step [10/25], Loss: 0.7799, Accuracy: 67.19%
+Epoch [7/10], Step [20/25], Loss: 0.8267, Accuracy: 65.62%
+Epoch [8/10], Step [10/25], Loss: 0.8192, Accuracy: 71.88%
+Epoch [8/10], Step [20/25], Loss: 0.8933, Accuracy: 59.38%
+Epoch [9/10], Step [10/25], Loss: 0.7395, Accuracy: 64.06%
+Epoch [9/10], Step [20/25], Loss: 0.7695, Accuracy: 71.88%
+Epoch [10/10], Step [10/25], Loss: 0.7868, Accuracy: 60.94%
+Epoch [10/10], Step [20/25], Loss: 0.8010, Accuracy: 65.62%
+Test Accuracy of the model: 56.666666666666664 %
