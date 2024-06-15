@@ -36,6 +36,7 @@ class SingleClassFolder(Dataset):
         return image
 
 
+# Evaluate dataset with a given model
 def evaluate_dataset(dataset_path, model):
     all_predictions = []
 
@@ -48,6 +49,7 @@ def evaluate_dataset(dataset_path, model):
     return all_predictions
 
 
+# Calculate the sum of the confusion matrix
 def calculate_confusion_matrix_sum():
     conf_matrix_sum = 0
 
@@ -58,10 +60,12 @@ def calculate_confusion_matrix_sum():
     return conf_matrix_sum
 
 
+# Count true positives for a given class
 def count_class_true_positive(model_class):
     return confusion_matrix[model_class][model_class]
 
 
+# Count false positives for a given class
 def count_class_false_positive(model_class):
     fp = 0
 
@@ -74,6 +78,7 @@ def count_class_false_positive(model_class):
     return fp
 
 
+# Count false negatives for a given class
 def count_class_false_negative(model_class):
     fn = 0
 
@@ -86,6 +91,7 @@ def count_class_false_negative(model_class):
     return fn
 
 
+# Count true negatives for a given class
 def count_class_true_negative(model_class):
     return calculate_confusion_matrix_sum() - (
             count_class_true_positive(model_class) + count_class_false_positive(
@@ -93,21 +99,25 @@ def count_class_true_negative(model_class):
         model_class))
 
 
+# Calculate precision for a given class
 def calculate_class_precision(model_class):
     return count_class_true_positive(model_class) / (
                 count_class_true_positive(model_class) + count_class_false_positive(model_class))
 
 
+# Calculate recall for a given class
 def calculate_class_recall(model_class):
     return count_class_true_positive(model_class) / (
                 count_class_true_positive(model_class) + count_class_false_negative(model_class))
 
 
+# Calculate F1 score for a given class
 def calculate_class_f1_measure(model_class):
     return (2 * calculate_class_precision(model_class) * calculate_class_recall(model_class)) / (
             calculate_class_precision(model_class) + calculate_class_recall(model_class))
 
 
+# Calculate overall accuracy
 def calculate_accuracy():
     tp = 0
 
@@ -123,6 +133,7 @@ performance_metrics_tabular = [
     ["Model", "Macro-Precision", "Macro-Recall", "Macro-F1", "Micro-Precision", "Micro-Recall", "Micro-F1",
      "Accuracy"], [], [], []]
 
+# Loop to evaluate multiple models
 for model_number in range(3):
 
     # Declare confusion matrix properties
@@ -180,6 +191,7 @@ for model_number in range(3):
         for predicted_class in predicted_class_list:
             confusion_matrix[class_int][predicted_class] = confusion_matrix[class_int][predicted_class] + 1
 
+    # Calculate performance metrics
     accuracy = calculate_accuracy()
 
     macro_precision = 0
@@ -224,6 +236,7 @@ for model_number in range(3):
 
     classes_row = []
 
+    # Fill confusion matrix table with headers
     for class_int in range(len(classes_list) + 1):
         if class_int == 0:
             classes_row.append("Class")
@@ -232,6 +245,7 @@ for model_number in range(3):
 
     confusion_matrix_tabular[0] = classes_row
 
+    # Fill confusion matrix table with performance metrics
     for class_int in range(1, len(confusion_matrix_tabular)):
         for column in range(len(confusion_matrix_tabular[0])):
             if column == 0:
@@ -239,6 +253,7 @@ for model_number in range(3):
             else:
                 confusion_matrix_tabular[class_int].append(str(confusion_matrix[class_int - 1][column - 1]))
 
+    # Display the current model's confusion matrix and performance metrics
     print(f"\n{chosen_model}'s Confusion Matrix:")
     for class_int in range(len(classes_list)):
         print(f'{confusion_matrix[class_int]}')
@@ -262,6 +277,7 @@ for model_number in range(3):
     print(
         f"\n{chosen_model}'s Performance Metrics:\n{performance_metrics_tabular[0]}\n{performance_metrics_tabular[model_number + 1]}\n")
 
+# Display all 3 confusion matrices and model performance metrics
 print(f"Complete Performance Metrics:")
 for row in performance_metrics_tabular:
     print(f"{row}")

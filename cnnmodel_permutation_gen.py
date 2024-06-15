@@ -7,13 +7,16 @@ Created on Tue Jun 11 11:08:46 2024
 import os.path
 import cnnmodel_automated
 
+# Check if the model count configuration file exists; if not, create it and initialize with '0'
 if not os.path.exists("./model_count_config.txt"):
     with open("./model_count_config.txt", 'w') as configFile:
         configFile.write('0')
 
+# Read the next model count from the configuration file
 with open("./model_count_config.txt", 'r+') as configFile:
     nextModelCount = int(configFile.readline())
 
+# Optionally define initial hardcoded hyperparameter values
 """
 lr = 50
 conv_dropout = 2.5
@@ -31,6 +34,7 @@ epoch_num = 25
 patience = 6
 """
 
+# Iterate over different hyperparameter combinations
 for train_batch_size in range(6, 9):
     for stride_length in range(1, 6):
         for kernel_size in range(3, 11, 2):
@@ -50,6 +54,7 @@ for train_batch_size in range(6, 9):
                                                 for epoch_num in range(10, 35, 5):
                                                     for patience in range(3, 7):
                                                         for i in range(1, 6):
+                                                            # Create and write the configuration for each model
                                                             with open(f"./models/model{nextModelCount}.txt", 'a+') as f:
                                                                 nextModelCount += 1
                                                                 with open("./model_count_config.txt", 'w') as configFile:
@@ -71,6 +76,7 @@ for train_batch_size in range(6, 9):
                                                                     f"Number of epochs: {epoch_num}\n" +
                                                                     f"Patience value: {patience}\n" +
                                                                     f"Try #{i}\n\n")
+                                                            # Call the main function of cnnmodel_automated with current hyperparameters
                                                             cnnmodel_automated.main(lr / 100000, conv_dropout / 10,
                                                                                     fc_dropout / 10,
                                                                                     dropout_iterate, 2 ** conv_layer_output,
@@ -81,4 +87,4 @@ for train_batch_size in range(6, 9):
                                                                                     2 ** (train_batch_size + 1),
                                                                                     conv_output_size_iterate,
                                                                                     f"./models/model{nextModelCount - 1}.txt",
-                                                                                    epoch_num, patience)
+                                                                                    epoch_num, patience, 'main_best_model.pth')

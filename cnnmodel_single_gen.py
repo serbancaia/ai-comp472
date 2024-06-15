@@ -7,16 +7,18 @@ Created on Tue Jun 14 09:14:32 2024
 import os.path
 import cnnmodel_automated
 
+# Check if the model count configuration file exists; if not, create it and initialize with '0'
 if not os.path.exists("./model_count_config.txt"):
     with open("./model_count_config.txt", 'w') as configFile:
         configFile.write('0')
 
+# Read the next model count from the configuration file
 with open("./model_count_config.txt", 'r+') as configFile:
     nextModelCount = int(configFile.readline())
 
-model_path = ''
 
-# Choose which model to save
+# Prompt user to choose which model to save
+model_path = ''
 while True:
     option = input("Which model would you like to save? Main model (0), or a variant (1)? (type only one of the numbers in parentheses) ")
     if option == "0":
@@ -34,6 +36,7 @@ while True:
     else:
         print("Invalid input. Please choose another one\n")
 
+# Prompt user to input hyperparameter values (commented hard-coded hyperparameters below each input method for testing)
 lr = float(input("Which learning rate value would you like to use? "))
 #lr = 0.0005
 conv_dropout = float(input("Which convolutional dropout value would you like to use? "))
@@ -65,7 +68,9 @@ patience = int(input("How many epochs would you like the patience value to be? "
 
 print(f"\nModel will be run 5 times\n")
 
+# Run the model 5 times with the specified hyperparameters
 for i in range(1, 6):
+    # Create and write the configuration for each model
     with open(f"./models/model{nextModelCount}.txt", 'a+') as f:
         nextModelCount += 1
         with open("./model_count_config.txt", 'w') as configFile:
@@ -88,6 +93,7 @@ for i in range(1, 6):
             f"Number of epochs: {epoch_num}\n" +
             f"Patience value: {patience}\n" +
             f"Try #{i}\n\n")
+    # Call the main function of cnnmodel_automated with current hyperparameters
     cnnmodel_automated.main(lr, conv_dropout,
                             fc_dropout,
                             dropout_iterate, conv_layer_output,

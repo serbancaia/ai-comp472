@@ -21,35 +21,47 @@ class ConvNeuralNet(nn.Module):
                  fc_layer_count, max_pool_iterate,
                  kernel_size, stride_length, conv_output_size_iterate):
         super(ConvNeuralNet, self).__init__()
-        layers = []
-        image_size = 48
-        power2_track = 0
+        layers = []  # List to hold layers of the network
+        image_size = 48  # Initial image size (assuming 48x48 images)
+        power2_track = 0  # Variable to track doubling of output channels
+
+        # Create convolutional layers
         for j in range(0, conv_layer_count):
+            # Order of operations for the first layer
             if j == 0:
+                # Prevent image_size from getting reduced below 4x4
                 if int((image_size - kernel_size) / stride_length + 1) < 4:
                     break
                 layers.append(nn.Conv2d(1, conv_layer_output * (2 ** power2_track), kernel_size, stride_length))
                 image_size = int((image_size - kernel_size) / stride_length + 1)
                 layers.append(nn.BatchNorm2d(conv_layer_output * (2 ** power2_track)))
                 layers.append(nn.LeakyReLU(True))
+            # Order of operations for other layers
             else:
+                # Prevent image_size from getting reduced below 4x4
                 if int((image_size - kernel_size) / stride_length + 1) < 4:
                     break
                 layers.append(nn.Conv2d(conv_layer_output * (2 ** power2_track),
                                         conv_layer_output * (
                                                 2 ** (power2_track + int(j % conv_output_size_iterate == 0))),
                                         kernel_size, stride_length))
+                # If we've reached a layer that requires doubling the number of output channels, double it
+                # Otherwise, keep the same number of output channels
                 power2_track += int(j % conv_output_size_iterate == 0)
                 image_size = int((image_size - kernel_size) / stride_length + 1)
                 layers.append(nn.BatchNorm2d(conv_layer_output * (2 ** power2_track)))
                 layers.append(nn.LeakyReLU(True))
+            # Max pooling operations for appropriate layers
             if (j + 1) % max_pool_iterate == 0:
+                # Prevent image_size from getting reduced below 4x4
                 if int(image_size / 2) < 4:
                     break
                 layers.append(nn.MaxPool2d(2, 2))
                 image_size = int(image_size / 2)
                 layers.append(nn.Dropout(conv_dropout))
+            # Max pooling operations for the last layer
             elif j == conv_layer_count - 1:
+                # Prevent image_size from getting reduced below 4x4
                 if int(image_size / 2) < 4:
                     break
                 layers.append(nn.MaxPool2d(2, 2))
@@ -58,6 +70,7 @@ class ConvNeuralNet(nn.Module):
 
         self.conv_layer = nn.Sequential(*layers)
 
+        # Calculate input size for the first fully connected layer
         fc_input1 = image_size * image_size * conv_layer_output * (2 ** power2_track)
         self.fc_input = fc_input1
         k = 0
@@ -69,26 +82,34 @@ class ConvNeuralNet(nn.Module):
                 fc_output1 *= (2 ** k)
                 k += 1
 
+        # List to hold fully connected layers
         fc_layers = []
         for j in range(0, fc_layer_count):
+            # Single layer case
             if j == 0 and j == fc_layer_count - 1:
                 fc_layers.append(nn.Linear(fc_input1, 4))
+            # First layer case
             elif j == 0:
                 fc_layers.append(nn.Linear(fc_input1, fc_output1))
                 fc_layers.append(nn.ReLU(True))
                 fc_layers.append(nn.Dropout(fc_dropout))
+            # Last layer case
             elif j == fc_layer_count - 1:
                 fc_layers.append(nn.Linear(fc_output1, 4))
+            # Intermediate layer case
             else:
                 fc_layers.append(nn.Linear(fc_output1, int(fc_output1 / 2)))
+                # Prevent number of output channels from going below 4
                 if int(fc_output1 / 2) == 4:
                     break
                 fc_output1 = int(fc_output1 / 2)
                 fc_layers.append(nn.ReLU(True))
+                # Apply dropout at appropriate layers
                 if j % dropout_iterate == 0:
                     fc_layers.append(nn.Dropout(fc_dropout))
 
-        self.fc_layer = nn.Sequential(*fc_layers)
+
+        self.fc_layer = nn.Sequential(*fc_layers) # Combine fully connected layers
 
     def forward(self, x):
         # Feeding image through convolutional and pooling layers
@@ -113,6 +134,7 @@ def main(lr, conv_dropout, fc_dropout, dropout_iterate, conv_layer_output, conv_
 
         num_classes = 4
 
+        # Define transformations for the dataset
         transform = transforms.Compose([
             transforms.Grayscale(num_output_channels=1),
             transforms.ToTensor(),
@@ -137,8 +159,6 @@ def main(lr, conv_dropout, fc_dropout, dropout_iterate, conv_layer_output, conv_
                                        num_workers=0)
         test_loader = DataLoader(test_dataset, batch_size=test_batch_size, shuffle=False, num_workers=0)
 
-        print("DataLoaders created from split dataset.")  # DEBUG
-
         print("Hyperparameters:")
         print(f"Number of epochs: {num_epochs}")
         print(f"Patience value: {patience}")
@@ -161,17 +181,17 @@ def main(lr, conv_dropout, fc_dropout, dropout_iterate, conv_layer_output, conv_
                               kernel_size, stride_length,
                               conv_output_size_iterate)  # Creating an instance of the CNN
 
-        criterion = nn.CrossEntropyLoss()  # Includes SoftMax, so we do not need a SoftMax activation function at the end of the last fc layer
-        optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+        criterion = nn.CrossEntropyLoss()  # Loss function
+        optimizer = torch.optim.Adam(model.parameters(), lr=lr)  # Optimizer
 
-        total_steps = len(train_loader)
+        total_steps = len(train_loader)  # Total number of steps in the training loop
 
-        best_val_loss = float('inf')
-        trigger_times = 0
+        best_val_loss = float('inf')  # Initialize best validation loss to infinity
+        trigger_times = 0  # Counter for early stopping
 
-        min_accuracy = 100
-        max_accuracy = 0
-        train_loss = 0
+        min_accuracy = 100  # Initialize minimum accuracy
+        max_accuracy = 0  # Initialize maximum accuracy
+        train_loss = 0  # Initialize training loss
 
         for epoch in range(num_epochs):
             model.train()
@@ -284,6 +304,7 @@ def main(lr, conv_dropout, fc_dropout, dropout_iterate, conv_layer_output, conv_
 
         print('Test Accuracy of the model: {} %'.format((correct / total) * 100))
         f.write('Test Accuracy of the model: {} %\n'.format((correct / total) * 100))
+    # Rename the model file with performance metrics
     filename = os.path.basename(model_file_name)
     os.rename(model_file_name,
               "./models/{:.4f}__{:.4f}__{:.4f}__{:.4f}__{:.4f}__{}".format((correct / total) * 100, max_accuracy,
