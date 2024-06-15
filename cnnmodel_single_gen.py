@@ -22,7 +22,8 @@ model_path = ''
 while True:
     option = input("Which model would you like to save? Main model (0), or a variant (1)? (type only one of the numbers in parentheses) ")
     if option == "0":
-        model_path = 'best_model.pth'
+        model_path = 'main_best_model.pth'
+        break
     elif option == "1":
         while True:
             if os.path.exists(f'./variant{option}.pth'):
