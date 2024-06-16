@@ -252,39 +252,6 @@ def main(lr, conv_dropout, fc_dropout, dropout_iterate, conv_layer_output, conv_
             if average_val_loss < best_val_loss:
                 best_val_loss = average_val_loss
                 trigger_times = 0
-
-                # Saving best-performing model (based on validation set)
-                if os.path.isfile('./' +
-                        model_path):  # File exists, will compare best model with current model and will save the better model
-                    # Define validation evaluation for the saved model
-                    def current_saved_model_eval(model, dataloader, criterion):
-                        model.eval()
-                        val_loss = 0.0
-                        with torch.no_grad():
-                            for images, labels in validation_loader:
-                                outputs = model(images)
-                                loss = criterion(outputs, labels)
-                                val_loss += loss.item()
-
-                        average_val_loss = val_loss / len(validation_loader)
-                        return average_val_loss
-
-                    saved_model = ConvNeuralNet(conv_dropout, fc_dropout, dropout_iterate, conv_layer_output, conv_layer_count,
-                              fc_layer_count, max_pool_iterate,
-                              kernel_size, stride_length,
-                              conv_output_size_iterate)  # Model creation as instance of ConvNeuralNet
-                    saved_model.load_state_dict(torch.load('./' + model_path))  # Load saved model
-                    saved_model_loss = current_saved_model_eval(saved_model, validation_loader,
-                                                                criterion)  # Evaluate saved model
-
-                    if average_val_loss < saved_model_loss:  # Compare saved model with current model, save current model as new best model, do nothing otherwise
-                        torch.save(model.state_dict(), model_path)
-                        print(f"New {model_path} model saved.")
-
-                else:  # File does not exist, first ever model will be saved
-                    torch.save(model.state_dict(), model_path)
-                    print(f"First {model_path} model saved.")
-
             else:
                 trigger_times += 1
                 if trigger_times >= patience:
@@ -332,7 +299,7 @@ if __name__ == "__main__":
     parser.add_argument('model_file_name', required=True, type=str)
     parser.add_argument('epoch_number', required=True, type=int)
     parser.add_argument('patience', required=True, type=int)
-    parser.add_argument('model_path', required=False, default="best_model.pth", type=str)
+    parser.add_argument('model_path', required=False, default="main_best_model.pth", type=str)
     args = parser.parse_args()
 
     main(args.lr, args.conv_dropout, args.fc_dropout, args.dropout_iterate, args.conv_layer_output,
