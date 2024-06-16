@@ -205,6 +205,10 @@ d) <br />
 <br />
 	This folder contains the created model configurations and metrics text files generated from the cnnmodel_automated.py script. The complete contents of the models folder can be found in the 'phase2' branch of our repository
 
+## model_count_config.txt: 
+<br />
+	This file contains the next model number that should appear in the next generated model text file inside the models folder. This text file is necessary for the functionality of the cnn_permutation_gen.py, cnn_single_gen.py scripts, and cnn_automated.py scripts
+
 ## Expectation of Originality files:  
 <br />
 	Expectations-of-Originality-June14-2024-AlinCaia.pdf: <br />
