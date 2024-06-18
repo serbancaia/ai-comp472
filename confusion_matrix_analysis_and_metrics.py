@@ -255,8 +255,9 @@ for model_number in range(3):
 
     # Display the current model's confusion matrix and performance metrics
     print(f"\n{chosen_model}'s Confusion Matrix:")
+    print(f"{['Actual/Predicted', 'Angry', 'Focused', 'Happy', 'Neutral']}")
     for class_int in range(len(classes_list)):
-        print(f'{confusion_matrix[class_int]}')
+        print(f'{classes_list[class_int]}\t\t\t{confusion_matrix[class_int]}')
 
     if model_number == 0:
         performance_metrics_tabular[model_number + 1] = ["Main Model", f'{macro_precision * 100:.4f}%',
