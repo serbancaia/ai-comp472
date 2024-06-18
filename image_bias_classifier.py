@@ -118,7 +118,7 @@ with open("./image_track_config.txt", 'r+') as configFile:
 if current_image_number == 0:
     print(f"Iterating through the {expressions[expression_int]} dataset for the first time")
 else:
-    print(f"Currently at image #{current_image_number} in the {expressions[expression_int]} dataset")
+    print(f"Currently at image #{current_image_number + 1} in the {expressions[expression_int]} dataset")
 
 # Check to see if the config file has written a higher image count than the actual number of images in the chosen class folder
 if current_image_number >= len(image_list):
