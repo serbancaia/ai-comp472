@@ -43,8 +43,10 @@ def choose_from_list(chosen_list: list) -> int:
             print("Invalid choice. Please choose another integer from the following:")
 
 
-# Relative path to the dataset
+# Relative path to the non-bias-classified dataset
 dataset_path = './ProjectDatasets'
+# Relative path to the bias-classified dataset
+biased_dataset_path = './ProjectBiasClassifiedDatasets'
 
 # Lists of classes and bias groups
 expressions = ['Angry', 'Focused', 'Happy', 'Neutral']
@@ -52,12 +54,38 @@ ages = ['Young', 'Middle-Aged', 'Senior']
 genders = ['Male', 'Female', 'Other']
 # races = ['Caucasian', 'African-American', 'Asian', 'Middle-Eastern', 'Latino']
 
+# Check to see if the directory tree for the bias-classified dataset was created
+if not os.path.isdir(biased_dataset_path):
+    print("Directory tree for bias-classified dataset doesn't exist.\nCreating it now.\n")
+    # Create the bias-classified dataset directory tree
+    os.makedirs(biased_dataset_path)
+    for i in expressions:
+        current_path = f"{biased_dataset_path}/{i}"
+        os.makedirs(current_path)
+        
+        ages_path = current_path + "/Age"
+        os.makedirs(ages_path)
+        for i in range(len(ages)):
+            os.makedirs(f"{ages_path}/{ages[i]}")
+
+        genders_path = current_path + "/Gender"
+        os.makedirs(genders_path)
+        for i in range(len(genders)):
+            os.makedirs(f"{genders_path}/{genders[i]}")
+
 # Make user decide which dataset class they would like to segment in bias groups
 print("Which expression do you want to segment by bias? (must be an integer value)")
 expression_int = choose_from_list(expressions)
 
-# Path of the chosen dataset class directory
+# Path of the chosen dataset class directory (non-biased-classified dataset)
 expression_path = f"{dataset_path}/{expressions[expression_int]}"
+# Path of the chosen dataset class directory (biased-classified dataset)
+classified_expression_path = f"{biased_dataset_path}/{expressions[expression_int]}"
+
+# Paths of the expression class' bias categories
+ages_path = f"{classified_expression_path}/Age"
+genders_path = f"{classified_expression_path}/Gender"
+
 # List of images from the chosen dataset class directory
 image_list = [f for f in listdir(expression_path) if isfile(join(expression_path, f))]
 
@@ -91,21 +119,6 @@ if current_image_number == 0:
     print(f"Iterating through the {expressions[expression_int]} dataset for the first time")
 else:
     print(f"Currently at image #{current_image_number} in the {expressions[expression_int]} dataset")
-
-# Check to see if the directory tree for each bias was created
-ages_path = f"{expression_path}/Age"
-if not os.path.isdir(ages_path):
-    # Create the bias directory tree inside the chosen class directory
-    os.makedirs(ages_path)
-    for i in range(len(ages)):
-        os.makedirs(f"{ages_path}/{ages[i]}")
-
-genders_path = f"{expression_path}/Gender"
-if not os.path.isdir(genders_path):
-    # Create the bias directory tree inside the chosen class directory
-    os.makedirs(genders_path)
-    for i in range(len(genders)):
-        os.makedirs(f"{genders_path}/{genders[i]}")
 
 # Check to see if the config file has written a higher image count than the actual number of images in the chosen class folder
 if current_image_number >= len(image_list):
