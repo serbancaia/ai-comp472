@@ -120,6 +120,12 @@ if current_image_number == 0:
 else:
     print(f"Currently at image #{current_image_number + 1} in the {expressions[expression_int]} dataset")
 
+# using list comprehension to remove duplicated from list
+unique_image_list = []
+[unique_image_list.append(x) for x in image_list if x not in unique_image_list]
+
+image_list = unique_image_list
+
 # Check to see if the config file has written a higher image count than the actual number of images in the chosen class folder
 if current_image_number >= len(image_list):
     # Terminate the program if that is the case
