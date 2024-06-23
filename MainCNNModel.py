@@ -19,6 +19,7 @@ learning_rate = 0.0005
 transform = transforms.Compose([
     transforms.Grayscale(num_output_channels=1),
     transforms.Resize((48, 48)),
+    transforms.RandomHorizontalFlip(),
     transforms.ToTensor(), 
     transforms.Normalize((0.5,), (0.5,))
 ])
@@ -39,6 +40,8 @@ test_dataset = datasets.ImageFolder(root=test_dir, transform=transform)
 train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True, num_workers=0)
 validation_loader = DataLoader(validation_dataset, batch_size=32, shuffle=False, num_workers=0)
 test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False, num_workers=0)
+
+torch.manual_seed(4)
 
 class ConvNeuralNet(nn.Module):
     def __init__(self):
@@ -102,7 +105,7 @@ optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 total_steps = len(train_loader)
 
 best_val_loss = float('inf')
-patience = 6  # Number of epochs to wait before early stopping
+patience = 5  # Number of epochs to wait before early stopping
 trigger_times = 0
 
 if __name__ == "__main__":
