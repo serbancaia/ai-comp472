@@ -1,0 +1,57 @@
+Training & validation batch size: 64
+Testing batch size: 128
+Stride length: 1
+Kernel size: 3
+Convolutional dropout value: 0.25
+FC layer dropout value: 0.5
+Max pooling iterates after every 2 conv layer
+Conv output channel value iterates after every 2 conv layer
+FC dropout iterates after every 1 FC layer
+Conv layer number: 5
+FC layer number: 2
+Initial conv layer output channels: 32
+Learning rate: 0.002
+Number of epochs: 20
+Try #3
+
+Epoch [1/20], Step [10/25], Loss: 2.9333, Accuracy: 46.88%
+Epoch [1/20], Step [20/25], Loss: 4.4676, Accuracy: 25.00%
+Epoch [2/20], Step [10/25], Loss: 3.0055, Accuracy: 31.25%
+Epoch [2/20], Step [20/25], Loss: 2.2339, Accuracy: 39.06%
+Epoch [3/20], Step [10/25], Loss: 1.5205, Accuracy: 46.88%
+Epoch [3/20], Step [20/25], Loss: 1.1022, Accuracy: 59.38%
+Epoch [4/20], Step [10/25], Loss: 1.3573, Accuracy: 40.62%
+Epoch [4/20], Step [20/25], Loss: 1.1618, Accuracy: 53.12%
+Epoch [5/20], Step [10/25], Loss: 1.2384, Accuracy: 40.62%
+Epoch [5/20], Step [20/25], Loss: 1.1486, Accuracy: 56.25%
+Epoch [6/20], Step [10/25], Loss: 1.2358, Accuracy: 46.88%
+Epoch [6/20], Step [20/25], Loss: 1.1090, Accuracy: 51.56%
+Epoch [7/20], Step [10/25], Loss: 1.0609, Accuracy: 50.00%
+Epoch [7/20], Step [20/25], Loss: 0.9519, Accuracy: 54.69%
+Epoch [8/20], Step [10/25], Loss: 1.1326, Accuracy: 50.00%
+Epoch [8/20], Step [20/25], Loss: 1.0262, Accuracy: 56.25%
+Epoch [9/20], Step [10/25], Loss: 0.9446, Accuracy: 60.94%
+Epoch [9/20], Step [20/25], Loss: 1.1958, Accuracy: 53.12%
+Epoch [10/20], Step [10/25], Loss: 0.9608, Accuracy: 54.69%
+Epoch [10/20], Step [20/25], Loss: 1.1014, Accuracy: 51.56%
+Epoch [11/20], Step [10/25], Loss: 0.7816, Accuracy: 64.06%
+Epoch [11/20], Step [20/25], Loss: 1.0047, Accuracy: 56.25%
+Epoch [12/20], Step [10/25], Loss: 0.9069, Accuracy: 62.50%
+Epoch [12/20], Step [20/25], Loss: 1.0722, Accuracy: 50.00%
+Epoch [13/20], Step [10/25], Loss: 1.0143, Accuracy: 62.50%
+Epoch [13/20], Step [20/25], Loss: 0.8503, Accuracy: 62.50%
+Epoch [14/20], Step [10/25], Loss: 0.9999, Accuracy: 53.12%
+Epoch [14/20], Step [20/25], Loss: 1.0110, Accuracy: 53.12%
+Epoch [15/20], Step [10/25], Loss: 0.9682, Accuracy: 59.38%
+Epoch [15/20], Step [20/25], Loss: 0.8056, Accuracy: 64.06%
+Epoch [16/20], Step [10/25], Loss: 0.9552, Accuracy: 62.50%
+Epoch [16/20], Step [20/25], Loss: 0.6718, Accuracy: 71.88%
+Epoch [17/20], Step [10/25], Loss: 0.6402, Accuracy: 71.88%
+Epoch [17/20], Step [20/25], Loss: 0.9861, Accuracy: 65.62%
+Epoch [18/20], Step [10/25], Loss: 0.8515, Accuracy: 59.38%
+Epoch [18/20], Step [20/25], Loss: 1.0657, Accuracy: 54.69%
+Epoch [19/20], Step [10/25], Loss: 0.7503, Accuracy: 60.94%
+Epoch [19/20], Step [20/25], Loss: 0.5571, Accuracy: 79.69%
+Epoch [20/20], Step [10/25], Loss: 0.8652, Accuracy: 67.19%
+Epoch [20/20], Step [20/25], Loss: 0.5462, Accuracy: 79.69%
+Test Accuracy of the model: 54.848484848484844 %

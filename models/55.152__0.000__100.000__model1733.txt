@@ -1,0 +1,30 @@
+Training & validation batch size: 64
+Testing batch size: 128
+Stride length: 1
+Kernel size: 3
+Convolutional dropout value: 0.25
+FC layer dropout value: 0.5
+Max pooling iterates after every 2 conv layer
+Conv output channel value iterates after every 2 conv layer
+FC dropout iterates after every 1 FC layer
+Conv layer number: 5
+FC layer number: 2
+Initial conv layer output channels: 32
+Learning rate: 0.001
+Number of epochs: 25
+Try #3
+
+Validation Loss: 7.5445516705513, Accuracy: 28.78787878787879%
+Validation Loss: 1.7219801743825276, Accuracy: 35.45454545454545%
+Validation Loss: 1.2885887026786804, Accuracy: 45.15151515151515%
+Validation Loss: 1.4224249124526978, Accuracy: 40.303030303030305%
+Validation Loss: 1.1033666332562764, Accuracy: 49.696969696969695%
+Validation Loss: 1.104229082663854, Accuracy: 54.84848484848485%
+Validation Loss: 1.0915346145629883, Accuracy: 54.54545454545455%
+Validation Loss: 1.1551096538702648, Accuracy: 54.84848484848485%
+Validation Loss: 1.128849188486735, Accuracy: 54.54545454545455%
+Validation Loss: 1.16741477449735, Accuracy: 56.06060606060606%
+Validation Loss: 1.1295575400193532, Accuracy: 51.515151515151516%
+Validation Loss: 1.4013633131980896, Accuracy: 52.72727272727273%
+Early stopping at epoch 12
+Test Accuracy of the model: 55.15151515151515 %
